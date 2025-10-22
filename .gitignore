@@ -1,3 +1,8 @@
 *.pyc
 __pycache__/
+airflow-dag-processor.*
+airflow.*
+simple_auth_manager_passwords.json.generated
+/logs
+*.txt
 
