@@ -1,6 +1,6 @@
 # Premier League Injury Impact Analysis - ETL Pipeline
 This project is an end-to-end data engineering solution designed to analyze the impact of player injuries on team performance in the English Premier League. By combining injury data from Premierinjuries.com with advanced performance statistics from Understat.com, the system provides quantitative insights into how personnel changes affect match outcomes and team dynamics.
-An article explaining the process of building this project is available [here]()
+An article explaining the process of building this project is available [here](https://dev.to/james_kariuki/building-an-automated-data-pipeline-injuries-vs-performance-in-the-premier-league-53c7)
 
 ## Project Structure
 
