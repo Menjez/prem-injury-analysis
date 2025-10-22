@@ -5,7 +5,7 @@ An article explaining the process of building this project is available [here]()
 ## Project Structure
 
 ```plaintext
-FoodPricesMonitoring/  # Root directory
+InjuryAnalysisETL/  # Root directory
 │
 ├── airflow/                
 │   ├── dags/
@@ -27,27 +27,27 @@ FoodPricesMonitoring/  # Root directory
 
 ## Pre Requisites
 Before installing this project, ensure you have the following:
-Python 3.8+ installed
-PostgreSQL 13+ database server
-Apache Airflow 2.0+
+- Python 3.8+ installed
+- PostgreSQL 13+ database server
+- Apache Airflow 2.0+
 
 The project also requires the following Python Packages:
-BeautifulSoup4
-Requests
-Psycopg2-binary
-Pandas
-lxml parser
+- BeautifulSoup4
+- Requests
+- Psycopg2-binary
+- Pandas
+- lxml parser
 
 
 ## Project Setup
-1. Clone the Repository
+### 1. Clone the Repository
 ```
-git clone https://github.com/yourusername/premier-league-etl.git
-cd premier-league-etl
+git clone https://github.com/yourusername/prem-injury-analysis.git
+cd prem-injury-analysis
 ```
-2. Create  and install Virtual Environment
-```
-bash# Create virtual environment
+### 2. Create  and install Virtual Environment
+```python
+# Create virtual environment
 python -m venv venv
 
 # Activate virtual environment
@@ -57,31 +57,55 @@ venv\Scripts\activate
 source venv/bin/activate
 ```
 
-Initialize Apache Airflow
+### 3. Initialize Apache Airflow
+
+> NOTE: For Airflow, run airflow db init to initialize a new instance of airflow.cfg, Airflow's config file and airflow.db a SQLite database instance. This project doesn't have these files as they have private information.
+
+#### a. Set AIRFLOW_HOME.
+Run the following command to set AIRFLOW_HOME where our Airflow configuration will reside at
 ```
 # Set Airflow home directory
 export AIRFLOW_HOME=~/airflow
+```
 
+Initialize Airflow config files
+Run the following command to initialize the files into the airflow folder
+```
 # Initialize the database
 airflow db init
-
-# Create admin user
+```
+#### b.Create admin user
+Run the following command to create an Admin user to access the Airflow UI.
+```
 airflow users create \
     --username admin \
     --firstname Admin \
     --lastname User \
     --role Admin \
     --email admin@example.com
-
-# Set settings in airflow.cfg file
+```
+#### c. Make the following changes to the settings in the configuration file
+Access the file by running
+```
+nano airflow/airflow.cfg
+```
+Make changes to the following settings:
+```
 load_settings=False # default True
 
 [database]
 sqlalchemy_conn_url = POSTGRES_URL # default SQLite Conn string 
 
+```
+Save the changes made then migrate changes to the newly connected PostgreSQL database
 
-# Copy DAG files to Airflow directory
-cp dags/premier_league_etl_dag.py $AIRFLOW_HOME/dags/
+#### d. Migrate changes to the database
+```
+airflow db migrate
+```
+
+#### e. Run the webserver and scheduler
+```
 
 # Start the web server (in one terminal)
 airflow webserver --port 8080
